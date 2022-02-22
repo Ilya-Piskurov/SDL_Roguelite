@@ -5,7 +5,9 @@
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 
-#include "map.h"
+/* FIX: Не нужен этот заголовок здесь. */
+
+/* #include "map.h" */
 /*-------------Libraries-------------*/
 
 /*---------Typedef---------*/

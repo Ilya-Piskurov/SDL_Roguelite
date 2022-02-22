@@ -18,10 +18,7 @@
 #define MIN_ROOM_WIDTH 2
 /*-------------Constants-------------*/
 
-/*--------Func-Prototypes--------*/
-void generate_map(char map[][ MAX_X ], int max_x, int max_y);
-void print_map(char map[][ MAX_X ], int max_x, int max_y);
-/*--------Func-Prototypes--------*/
+/* TODO: Не нужно помещать объявления структур вниз. */
 
 /*---------Typedef---------*/
 typedef struct Coordinates_Point_Of_Bridge
@@ -30,5 +27,10 @@ typedef struct Coordinates_Point_Of_Bridge
     int y;
 } Coordinates_Point_Of_Bridge;
 /*---------Typedef---------*/
+
+/*--------Func-Prototypes--------*/
+void generate_map(char map[][ MAX_X ], int max_x, int max_y);
+void print_map(char map[][ MAX_X ], int max_x, int max_y);
+/*--------Func-Prototypes--------*/
 
 #endif
