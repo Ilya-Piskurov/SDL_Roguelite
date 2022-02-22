@@ -76,10 +76,8 @@ int game_sdl_run( )
 
     Game_Map game_map;
     init_game_map( &game_map, MAX_X, MAX_Y, "./res/img/floor.bmp", "./res/img/wall.bmp", renderer );
-    //Player player;
-    //init_player( &player, &game_map, "./res/img/hero.bmp", renderer );
-    SDL_Texture *wall_texture  = load_image( "./res/img/wall.bmp", renderer );
-    SDL_Texture *floor_texture = load_image( "./res/img/floor.bmp", renderer );
+    Player player;
+    init_player( &player, &game_map, "./res/img/hero.bmp", renderer );
 
     SDL_RenderClear( renderer );
     /*print_map*/
@@ -89,17 +87,17 @@ int game_sdl_run( )
         {
             if ( game_map.grid[ y ][ x ] == '#')
             {
-                apply_surface( x * TILE_SIZE, y * TILE_SIZE, wall_texture, renderer );
+                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map.wall_texture, renderer );
             }
             if ( game_map.grid[ y ][ x ] == ' ')
             {
-                apply_surface( x * TILE_SIZE, y * TILE_SIZE, floor_texture, renderer );
+                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map.floor_texture, renderer );
             }
         }
     }
 
     //print_player
-    //apply_surface( player.x, player.y, player.texture, renderer );
+    apply_surface( player.x, player.y, player.texture, renderer );
     
     SDL_RenderPresent( renderer );
 
@@ -118,9 +116,11 @@ int game_sdl_run( )
         }
     }
     
+    destroy_player( &player );
+    destroy_game_map( &game_map );
+
     SDL_DestroyWindow( window );
     SDL_DestroyRenderer( renderer );
-    SDL_DestroyTexture( wall_texture );
     SDL_Quit( );
     
     return EXIT_SUCCESS;

@@ -6,8 +6,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
-
-#include "view.h"
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
@@ -38,6 +36,10 @@ typedef struct
 } Coordinates_Point_Of_Bridge;
 /*---------Typedef---------*/
 
+/*-------------Libraries-------------*/
+#include "view.h"
+/*-------------Libraries-------------*/
+
 /*--------Func-Prototypes--------*/
 void generate_grid( Game_Map *game_map );
 void debug_console_print_map(char map[][ MAX_X ], int max_x, int max_y);
@@ -47,6 +49,7 @@ void init_game_map
     char path_to_floor_img[], char path_to_wall_img[],
     SDL_Renderer *renderer 
 );
+void destroy_game_map( Game_Map *game_map );
 /*--------Func-Prototypes--------*/
 
 #endif

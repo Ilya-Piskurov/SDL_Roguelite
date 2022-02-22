@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gcc -Wall -o roguelite map.c view.c player.c main.c -lSDL2
+gcc -Wall -o roguelite main.c view.c map.c player.c -lSDL2

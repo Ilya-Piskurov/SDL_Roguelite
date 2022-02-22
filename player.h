@@ -24,6 +24,7 @@ void init_player
     Player *player, Game_Map *game_map,
     char path[], SDL_Renderer *renderer
 );
+void destroy_player( Player *player );
 /*--------Func-Prototypes--------*/
 
 #endif

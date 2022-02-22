@@ -1,5 +1,11 @@
 #include "map.h"
 
+void destroy_game_map( Game_Map *game_map )
+{
+    SDL_DestroyTexture( game_map->floor_texture );
+    SDL_DestroyTexture( game_map->wall_texture  );
+}
+
 void debug_print_coordinates
 (
     int top_y, int bottom_y, int left_x, 
