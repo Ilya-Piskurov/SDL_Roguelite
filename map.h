@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <SDL2/SDL.h>
+
+#include "view.h"
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
@@ -18,17 +21,32 @@
 #define MIN_ROOM_WIDTH 2
 /*-------------Constants-------------*/
 
-/*--------Func-Prototypes--------*/
-void generate_map(char map[][ MAX_X ], int max_x, int max_y);
-void print_map(char map[][ MAX_X ], int max_x, int max_y);
-/*--------Func-Prototypes--------*/
-
 /*---------Typedef---------*/
-typedef struct Coordinates_Point_Of_Bridge
+typedef struct
+{
+    int max_x;
+    int max_y;
+    char grid[ MAX_Y ][ MAX_X ];
+    SDL_Texture *floor_texture;
+    SDL_Texture *wall_texture;
+} Game_Map;
+
+typedef struct
 {
     int x;
     int y;
 } Coordinates_Point_Of_Bridge;
 /*---------Typedef---------*/
+
+/*--------Func-Prototypes--------*/
+void generate_grid( Game_Map *game_map );
+void debug_console_print_map(char map[][ MAX_X ], int max_x, int max_y);
+void init_game_map
+( 
+    Game_Map *game_map, int max_x, int max_y,
+    char path_to_floor_img[], char path_to_wall_img[],
+    SDL_Renderer *renderer 
+);
+/*--------Func-Prototypes--------*/
 
 #endif

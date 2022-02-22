@@ -46,7 +46,7 @@ void apply_surface
     SDL_RenderCopy( renderer, texture, NULL, &position );
 }
 
-int game_sdl_run( char map[ ][ MAX_X ] )
+int game_sdl_run( )
 {
     SDL_Init( SDL_INIT_EVERYTHING );
 
@@ -74,24 +74,24 @@ int game_sdl_run( char map[ ][ MAX_X ] )
         return 1;
     }
 
-    Player player;
-    init_player( &player, map);
-
+    Game_Map game_map;
+    init_game_map( &game_map, MAX_X, MAX_Y, "./res/img/floor.bmp", "./res/img/wall.bmp", renderer );
+    //Player player;
+    //init_player( &player, &game_map, "./res/img/hero.bmp", renderer );
     SDL_Texture *wall_texture  = load_image( "./res/img/wall.bmp", renderer );
     SDL_Texture *floor_texture = load_image( "./res/img/floor.bmp", renderer );
-    SDL_Texture *hero_texture  = load_image( "./res/img/hero.bmp", renderer);
 
     SDL_RenderClear( renderer );
     /*print_map*/
-    for ( int y = 0; y < MAX_Y; y++ )
+    for ( int y = 0; y < game_map.max_y; y++ )
     {
-        for ( int x = 0; x < MAX_X; x++)
+        for ( int x = 0; x < game_map.max_x; x++)
         {
-            if ( map[ y ][ x ] == '#')
+            if ( game_map.grid[ y ][ x ] == '#')
             {
                 apply_surface( x * TILE_SIZE, y * TILE_SIZE, wall_texture, renderer );
             }
-            if ( map[ y ][ x ] == ' ')
+            if ( game_map.grid[ y ][ x ] == ' ')
             {
                 apply_surface( x * TILE_SIZE, y * TILE_SIZE, floor_texture, renderer );
             }
@@ -99,7 +99,7 @@ int game_sdl_run( char map[ ][ MAX_X ] )
     }
 
     //print_player
-    apply_surface( player.x, player.y, hero_texture, renderer );
+    //apply_surface( player.x, player.y, player.texture, renderer );
     
     SDL_RenderPresent( renderer );
 

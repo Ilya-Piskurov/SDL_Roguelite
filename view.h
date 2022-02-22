@@ -14,7 +14,8 @@
 /*-------------Constants-------------*/
 
 /*--------Func-Prototypes--------*/
-int game_sdl_run( char map[ ][ MAX_X ] );
+int game_sdl_run( );
+SDL_Texture* load_image( char path[], SDL_Renderer *renderer );
 /*--------Func-Prototypes--------*/
 
 #endif

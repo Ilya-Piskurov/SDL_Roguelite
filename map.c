@@ -123,16 +123,19 @@ bool is_first_room( int x, int y )
     return result;
 }
 
-void generate_map( char map[][ MAX_X ], int max_x, int max_y ) 
+void generate_grid( Game_Map *game_map ) 
 {
-    set_map_of_null( map, MAX_X, MAX_Y );
+    set_map_of_null( game_map->grid, game_map->max_x, game_map->max_y );
     
     int current_bridge_x = -1, current_bridge_y = -1,
         previous_bridge_x, previous_bridge_y;
         
     for ( int rooms = 0; rooms < COUNT_OF_ROOMS; rooms++ )
     {    
-        Coordinates_Point_Of_Bridge point = generate_one_room(map, rooms);
+        Coordinates_Point_Of_Bridge point = generate_one_room
+        ( 
+            game_map->grid, rooms
+        );
                
         previous_bridge_y = current_bridge_y;
         previous_bridge_x = current_bridge_x;
@@ -144,14 +147,15 @@ void generate_map( char map[][ MAX_X ], int max_x, int max_y )
         {
             build_bridge
             (
-                map, MAX_X, MAX_Y, current_bridge_x,
-                previous_bridge_x, current_bridge_y, previous_bridge_y
+                game_map->grid, game_map->max_x, game_map->max_y, 
+                current_bridge_x, previous_bridge_x, 
+                current_bridge_y, previous_bridge_y
             );
         }
     }
 }
 
-void print_map( char map[][MAX_X], int max_x, int max_y )
+void debug_console_print_map( char map[][MAX_X], int max_x, int max_y )
 {    
     for ( int y = 0; y < max_y; y++ )
     {
@@ -163,4 +167,20 @@ void print_map( char map[][MAX_X], int max_x, int max_y )
     }
 
     putchar('\n');
+}
+
+void init_game_map
+( 
+    Game_Map *game_map, int max_x, int max_y,
+    char path_to_floor_img[], char path_to_wall_img[],
+    SDL_Renderer *renderer 
+) 
+{
+    game_map->max_x = max_x;
+    game_map->max_y = max_y;
+
+    generate_grid( game_map );
+
+    game_map->floor_texture = load_image( path_to_floor_img, renderer );
+    game_map->wall_texture  = load_image( path_to_wall_img, renderer );
 }
