@@ -5,7 +5,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
+
+typedef struct SDL_Renderer SDL_Renderer;
+
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
@@ -20,7 +22,7 @@
 /*-------------Constants-------------*/
 
 /*---------Typedef---------*/
-typedef struct
+typedef struct Game_Map
 {
     int max_x;
     int max_y;

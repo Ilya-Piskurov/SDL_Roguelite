@@ -2,11 +2,16 @@
 #define PLAYER_H
 
 /*-------------Libraries-------------*/
-#include <SDL2/SDL.h>
+/* #include <SDL2/SDL.h> */
 #include <stdlib.h>
 
-#include "map.h"
-#include "view.h"
+/* #include "map.h"
+#include "view.h" */
+
+/* Forward declaration for struct Game_Map */
+typedef struct Game_Map Game_Map;
+typedef struct SDL_Renderer SDL_Renderer;
+
 /*-------------Libraries-------------*/
 
 /*---------Typedef---------*/

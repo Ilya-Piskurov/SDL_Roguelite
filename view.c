@@ -1,4 +1,7 @@
 #include "view.h"
+#include "map.h"
+#include "player.h"
+#include <SDL2/SDL.h>
 
 /*-------------Constants-------------*/
 const int 

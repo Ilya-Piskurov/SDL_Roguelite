@@ -2,11 +2,14 @@
 #define VIEW_H
 
 /*-------------Libraries-------------*/
-#include <SDL2/SDL.h>
 #include <stdbool.h>
 
-#include "map.h"
-#include "player.h"
+/* Forward declarations */
+typedef struct SDL_Renderer SDL_Renderer;
+typedef struct SDL_Texture SDL_Texture;
+
+/* #include "map.h"
+#include "player.h" */
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/

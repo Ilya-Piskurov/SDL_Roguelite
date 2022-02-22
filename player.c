@@ -1,4 +1,7 @@
 #include "player.h"
+#include "map.h"
+#include "view.h"
+#include <SDL2/SDL.h>
 
 void init_player
 (

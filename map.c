@@ -1,4 +1,5 @@
 #include "map.h"
+#include <SDL2/SDL.h>
 
 void destroy_game_map( Game_Map *game_map )
 {
