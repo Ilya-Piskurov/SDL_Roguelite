@@ -1,9 +1,5 @@
 #include "map.h"
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-
 void debug_print_coordinates
 (
     int top_y, int bottom_y, int left_x, 

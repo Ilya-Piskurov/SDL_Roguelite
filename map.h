@@ -1,9 +1,15 @@
 #ifndef MAP_H
 #define MAP_H
 
+/*-------------Libraries-------------*/
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+/*-------------Libraries-------------*/
+
 /*-------------Constants-------------*/
-#define MAX_X 60
-#define MAX_Y 40
+#define MAX_X 50
+#define MAX_Y 30
 #define COUNT_OF_ROOMS 17
 
 #define MAX_ROOM_HEIGHT 6

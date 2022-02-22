@@ -1,17 +1,9 @@
 #include "view.h"
 
-/*-------------Libraries-------------*/
-#include "map.h"
-#include <SDL2/SDL.h>
-#include <stdbool.h>
-/*-------------Libraries-------------*/
-
 /*-------------Constants-------------*/
-#define TILE_SIZE 16
-
 const int 
-    WIDTH = MAX_X * 16, 
-    HEIGHT = MAX_Y * 16;
+    WIDTH = MAX_X * TILE_SIZE, 
+    HEIGHT = MAX_Y * TILE_SIZE;
 /*-------------Constants-------------*/
 
 SDL_Texture* load_image( char path[], SDL_Renderer *renderer )
@@ -60,7 +52,7 @@ int game_sdl_run( char map[ ][ MAX_X ] )
 
     SDL_Window *window = SDL_CreateWindow
     (
-		"Hello SDL World", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
+		"SDL_Roguelite", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
 		WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI
 	);
     // Check that the window was successfully created
@@ -82,8 +74,12 @@ int game_sdl_run( char map[ ][ MAX_X ] )
         return 1;
     }
 
+    Player player;
+    init_player( &player, map);
+
     SDL_Texture *wall_texture  = load_image( "./res/img/wall.bmp", renderer );
     SDL_Texture *floor_texture = load_image( "./res/img/floor.bmp", renderer );
+    SDL_Texture *hero_texture  = load_image( "./res/img/hero.bmp", renderer);
 
     SDL_RenderClear( renderer );
     /*print_map*/
@@ -101,10 +97,13 @@ int game_sdl_run( char map[ ][ MAX_X ] )
             }
         }
     }
-    /*print_map*/
+
+    //print_player
+    apply_surface( player.x, player.y, hero_texture, renderer );
+    
     SDL_RenderPresent( renderer );
 
-    SDL_Delay(2000);
+    //SDL_Delay(2000);
     
     SDL_Event windowEvent;
     
