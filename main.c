@@ -10,7 +10,9 @@
  * Движения игрока (по примеру JS)
  * Коллизии (по примеру JS)
  * Разбить код по модулям ( map, view )            +
- * Убрать зависимость модуля view от map
+ * Убрать зависимость модуля view от map           -
+ * Скролл карты
+ * Собрать структуры Plyaer и Map
  */
 
 /*-------------Libraries-------------*/
@@ -25,10 +27,10 @@ int main( void )
 {
     char map[ MAX_Y ][ MAX_X ];
     
-    srand(time(NULL));
+    srand( time( NULL ) );
     
-    generate_map(map, MAX_X, MAX_Y);
-    print_map(map, MAX_X, MAX_Y);
+    generate_map( map, MAX_X, MAX_Y );
+    //print_map( map, MAX_X, MAX_Y );
     
     return game_sdl_run( map );
 }
