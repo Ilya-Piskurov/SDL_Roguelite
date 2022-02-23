@@ -5,9 +5,8 @@
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 
-/* FIX: Не нужен этот заголовок здесь. */
-
-/* #include "map.h" */
+#include "map.h"
+#include "view.h"
 /*-------------Libraries-------------*/
 
 /*---------Typedef---------*/
@@ -15,11 +14,18 @@ typedef struct Player
 {
     double x;
     double y;
+    SDL_Texture *texture;
 } Player;
 /*---------Typedef---------*/
 
 /*--------Func-Prototypes--------*/
-void init_player( Player *player, char map[ ][ MAX_X ] );
+void init_player
+( 
+    Player *player, Game_Map *game_map,
+    char path[], SDL_Renderer *renderer
+);
+void destroy_player( Player *player );
+void draw_player( Player *player, SDL_Renderer *renderer );
 /*--------Func-Prototypes--------*/
 
 #endif

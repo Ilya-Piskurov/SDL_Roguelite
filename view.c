@@ -51,8 +51,9 @@ void apply_surface
     SDL_RenderCopy( renderer, texture, NULL, &position );
 }
 
-int game_sdl_run( char map[ ][ MAX_X ] )
+int game_sdl_run( )
 {
+    /*---------Init-Part--------*/
     SDL_Init( SDL_INIT_EVERYTHING );
 
     SDL_Window *window = SDL_CreateWindow
@@ -60,7 +61,7 @@ int game_sdl_run( char map[ ][ MAX_X ] )
 		"SDL_Roguelite", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
 		WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI
 	);
-    // Check that the window was successfully created
+
     if ( NULL == window )
     {
         printf( "SDL_CreateWindow error: %s\n", SDL_GetError( ) );
@@ -79,37 +80,28 @@ int game_sdl_run( char map[ ][ MAX_X ] )
         return 1;
     }
 
+    Game_Map game_map;
+    init_game_map
+    ( 
+        &game_map, MAX_X, MAX_Y, 
+        "./res/img/floor.bmp", "./res/img/wall.bmp", 
+        renderer 
+    );
     Player player;
-    init_player( &player, map);
+    init_player( &player, &game_map, "./res/img/hero.bmp", renderer );
+    /*---------Init-Part--------*/
 
-    SDL_Texture *wall_texture  = load_image( "./res/img/wall.bmp", renderer );
-    SDL_Texture *floor_texture = load_image( "./res/img/floor.bmp", renderer );
-    SDL_Texture *hero_texture  = load_image( "./res/img/hero.bmp", renderer);
-
+    /*---------Draw-Part--------*/
     SDL_RenderClear( renderer );
-    /*print_map*/
-    for ( int y = 0; y < MAX_Y; y++ )
-    {
-        for ( int x = 0; x < MAX_X; x++)
-        {
-            if ( map[ y ][ x ] == '#')
-            {
-                apply_surface( x * TILE_SIZE, y * TILE_SIZE, wall_texture, renderer );
-            }
-            if ( map[ y ][ x ] == ' ')
-            {
-                apply_surface( x * TILE_SIZE, y * TILE_SIZE, floor_texture, renderer );
-            }
-        }
-    }
 
-    //print_player
-    apply_surface( player.x, player.y, hero_texture, renderer );
+    draw_game_map( &game_map, renderer );
+    draw_player( &player, renderer );
     
     SDL_RenderPresent( renderer );
 
     //SDL_Delay(2000);
-    
+    /*---------Draw-Part--------*/
+
     SDL_Event windowEvent;
     
     while ( true )
@@ -123,10 +115,14 @@ int game_sdl_run( char map[ ][ MAX_X ] )
         }
     }
     
+    /*----------Destroy-Part----------*/
+    destroy_player( &player );
+    destroy_game_map( &game_map );
+
     SDL_DestroyWindow( window );
     SDL_DestroyRenderer( renderer );
-    SDL_DestroyTexture( wall_texture );
     SDL_Quit( );
+    /*----------Destroy-Part----------*/
     
     return EXIT_SUCCESS;
 }
