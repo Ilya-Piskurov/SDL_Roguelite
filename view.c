@@ -1,10 +1,5 @@
 #include "view.h"
 
-/* FIX: Это нужно здесь! */
-
-#include "player.h"
-#include "map.h"
-
 /*-------------Constants-------------*/
 const int 
     WIDTH = MAX_X * TILE_SIZE, 
