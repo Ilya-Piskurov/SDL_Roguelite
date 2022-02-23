@@ -20,6 +20,11 @@ void init_player
     player->x = x * TILE_SIZE;
 }
 
+void draw_player( Player *player, SDL_Renderer *renderer )
+{
+    apply_surface( player->x, player->y, player->texture, renderer );
+} 
+
 void destroy_player( Player *player )
 {
     SDL_DestroyTexture( player->texture );

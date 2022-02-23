@@ -25,6 +25,7 @@ void init_player
     char path[], SDL_Renderer *renderer
 );
 void destroy_player( Player *player );
+void draw_player( Player *player, SDL_Renderer *renderer );
 /*--------Func-Prototypes--------*/
 
 #endif

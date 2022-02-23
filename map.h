@@ -42,7 +42,7 @@ typedef struct
 
 /*--------Func-Prototypes--------*/
 void generate_grid( Game_Map *game_map );
-void debug_console_print_map(char map[][ MAX_X ], int max_x, int max_y);
+void debug_console_print_map( Game_Map *game_map );
 void init_game_map
 ( 
     Game_Map *game_map, int max_x, int max_y,
@@ -50,6 +50,7 @@ void init_game_map
     SDL_Renderer *renderer 
 );
 void destroy_game_map( Game_Map *game_map );
+void draw_game_map( Game_Map *game_map, SDL_Renderer *renderer );
 /*--------Func-Prototypes--------*/
 
 #endif

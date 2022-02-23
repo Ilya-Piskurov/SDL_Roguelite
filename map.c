@@ -1,5 +1,23 @@
 #include "map.h"
 
+void draw_game_map( Game_Map *game_map, SDL_Renderer *renderer )
+{
+    for ( int y = 0; y < game_map->max_y; y++ )
+    {
+        for ( int x = 0; x < game_map->max_x; x++)
+        {
+            if ( game_map->grid[ y ][ x ] == '#')
+            {
+                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map->wall_texture, renderer );
+            }
+            if ( game_map->grid[ y ][ x ] == ' ')
+            {
+                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map->floor_texture, renderer );
+            }
+        }
+    }
+}
+
 void destroy_game_map( Game_Map *game_map )
 {
     SDL_DestroyTexture( game_map->floor_texture );
@@ -161,18 +179,17 @@ void generate_grid( Game_Map *game_map )
     }
 }
 
-void debug_console_print_map( char map[][MAX_X], int max_x, int max_y )
+void debug_console_print_map( Game_Map *game_map )
 {    
-    for ( int y = 0; y < max_y; y++ )
+    for ( int y = 0; y < game_map->max_y; y++ )
     {
-        for ( int x = 0; x < max_x; x++ )
+        for ( int x = 0; x < game_map->max_x; x++ )
         {
-            putchar(map[ y ][ x ]);
+            putchar( game_map->grid[ y ][ x ] );
         }
-        putchar('\n');
+        putchar( '\n' );
     }
-
-    putchar('\n');
+    putchar( '\n' );
 }
 
 void init_game_map

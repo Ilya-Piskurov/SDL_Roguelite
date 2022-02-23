@@ -48,6 +48,7 @@ void apply_surface
 
 int game_sdl_run( )
 {
+    /*---------Init-Part--------*/
     SDL_Init( SDL_INIT_EVERYTHING );
 
     SDL_Window *window = SDL_CreateWindow
@@ -55,7 +56,7 @@ int game_sdl_run( )
 		"SDL_Roguelite", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
 		WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI
 	);
-    // Check that the window was successfully created
+
     if ( NULL == window )
     {
         printf( "SDL_CreateWindow error: %s\n", SDL_GetError( ) );
@@ -75,34 +76,27 @@ int game_sdl_run( )
     }
 
     Game_Map game_map;
-    init_game_map( &game_map, MAX_X, MAX_Y, "./res/img/floor.bmp", "./res/img/wall.bmp", renderer );
+    init_game_map
+    ( 
+        &game_map, MAX_X, MAX_Y, 
+        "./res/img/floor.bmp", "./res/img/wall.bmp", 
+        renderer 
+    );
     Player player;
     init_player( &player, &game_map, "./res/img/hero.bmp", renderer );
+    /*---------Init-Part--------*/
 
+    /*---------Draw-Part--------*/
     SDL_RenderClear( renderer );
-    /*print_map*/
-    for ( int y = 0; y < game_map.max_y; y++ )
-    {
-        for ( int x = 0; x < game_map.max_x; x++)
-        {
-            if ( game_map.grid[ y ][ x ] == '#')
-            {
-                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map.wall_texture, renderer );
-            }
-            if ( game_map.grid[ y ][ x ] == ' ')
-            {
-                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map.floor_texture, renderer );
-            }
-        }
-    }
 
-    //print_player
-    apply_surface( player.x, player.y, player.texture, renderer );
+    draw_game_map( &game_map, renderer );
+    draw_player( &player, renderer );
     
     SDL_RenderPresent( renderer );
 
     //SDL_Delay(2000);
-    
+    /*---------Draw-Part--------*/
+
     SDL_Event windowEvent;
     
     while ( true )
@@ -116,12 +110,14 @@ int game_sdl_run( )
         }
     }
     
+    /*----------Destroy-Part----------*/
     destroy_player( &player );
     destroy_game_map( &game_map );
 
     SDL_DestroyWindow( window );
     SDL_DestroyRenderer( renderer );
     SDL_Quit( );
+    /*----------Destroy-Part----------*/
     
     return EXIT_SUCCESS;
 }
