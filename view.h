@@ -5,8 +5,11 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
-#include "map.h"
-#include "player.h"
+/* FIX: Это тоже здесь не нужно. */
+
+/* #include "map.h"
+#include "player.h" */
+
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
