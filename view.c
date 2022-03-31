@@ -2,8 +2,8 @@
 
 /*-------------Constants-------------*/
 const int 
-    WIDTH = MAX_X * TILE_SIZE, 
-    HEIGHT = MAX_Y * TILE_SIZE;
+    WIDTH = MAX_X * TILE_SIZE * SCALE, 
+    HEIGHT = MAX_Y * TILE_SIZE * SCALE;
 /*-------------Constants-------------*/
 
 SDL_Texture* load_image( char path[], SDL_Renderer *renderer )
@@ -15,6 +15,10 @@ SDL_Texture* load_image( char path[], SDL_Renderer *renderer )
 
     if ( loaded_image != NULL )
     {
+        SDL_SetColorKey
+        (
+            loaded_image, true, SDL_MapRGB( loaded_image->format, BACKGROUND_COLOR ) 
+        );
         texture = SDL_CreateTextureFromSurface
         (
             renderer, loaded_image
@@ -74,6 +78,8 @@ int game_sdl_run( )
         printf( "SDL_CreateRenderer error: %s\n", SDL_GetError( ) );
         return 1;
     }
+
+    SDL_RenderSetScale(renderer, SCALE, SCALE);
 
     Game_Map game_map;
     init_game_map

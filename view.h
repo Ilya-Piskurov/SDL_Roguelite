@@ -10,7 +10,9 @@
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
-#define TILE_SIZE 32
+#define TILE_SIZE 16
+#define BACKGROUND_COLOR 255, 255, 255
+#define SCALE 3
 /*-------------Constants-------------*/
 
 /*--------Func-Prototypes--------*/
