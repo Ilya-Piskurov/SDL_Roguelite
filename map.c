@@ -109,24 +109,33 @@ void build_bridge
         end_x   = x1;
         end_y   = y1;
     }               
-            
-    for ( int x = start_x; x <= end_x; x++ )
+    
+    for ( int y = start_y; y < start_y + BRIDGE_WIDTH; y++ )
     {
-        map[ start_y ][ x ] = ' ';
+        for ( int x = start_x; x <= end_x; x++ )
+        {
+            map[ y ][ x ] = ' ';
+        }    
     }
     
     if ( start_y < end_y )
     {
-        for ( int y = start_y; y <= end_y; y++ )
+        for ( int x = end_x; x < end_x + BRIDGE_WIDTH; x++ )
         {
-            map[ y ][ end_x ] = ' ';
+            for ( int y = start_y; y <= end_y; y++ )
+            {
+                map[ y ][ x ] = ' ';
+            }
         }
-    } 
+    }
     else 
     {
-        for ( int y = start_y; y >= end_y; y-- ) 
+        for ( int x = end_x; x < end_x + BRIDGE_WIDTH; x++ )
         {
-            map[ y ][ end_x ] = ' ';
+            for ( int y = start_y; y >= end_y; y-- ) 
+            {
+                map[ y ][ x ] = ' ';
+            }
         }
     }
 }

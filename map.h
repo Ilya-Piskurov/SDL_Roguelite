@@ -17,6 +17,8 @@
 #define MAX_ROOM_WIDTH 6
 #define MIN_ROOM_HEIGHT 2
 #define MIN_ROOM_WIDTH 2
+
+#define BRIDGE_WIDTH 2
 /*-------------Constants-------------*/
 
 /*---------Typedef---------*/
