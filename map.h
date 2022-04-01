@@ -9,9 +9,9 @@
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
-#define MAX_X 50
-#define MAX_Y 30
-#define COUNT_OF_ROOMS 17
+#define MAX_X 25 // 40
+#define MAX_Y 15 // 20
+#define COUNT_OF_ROOMS 10 //20
 
 #define MAX_ROOM_HEIGHT 6
 #define MAX_ROOM_WIDTH 6
