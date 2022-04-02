@@ -9,14 +9,16 @@
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
-#define MAX_X 25 // 40
-#define MAX_Y 15 // 20
-#define COUNT_OF_ROOMS 10 //20
+#define MAX_X 60          // 40 - 25
+#define MAX_Y 30          // 20 - 15
+#define COUNT_OF_ROOMS 25 // 20 - 10
 
-#define MAX_ROOM_HEIGHT 6
-#define MAX_ROOM_WIDTH 6
-#define MIN_ROOM_HEIGHT 2
-#define MIN_ROOM_WIDTH 2
+#define MAX_ROOM_HEIGHT 7
+#define MAX_ROOM_WIDTH 7
+#define MIN_ROOM_HEIGHT 3
+#define MIN_ROOM_WIDTH 3
+
+#define BRIDGE_WIDTH 2
 /*-------------Constants-------------*/
 
 /*---------Typedef---------*/
