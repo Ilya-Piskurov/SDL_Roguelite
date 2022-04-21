@@ -1,11 +1,14 @@
-#include "player.h"
+#include "headers/player.h"
 
-void init_player
+Player * init_player
 (
-    Player *player, Game_Map *game_map,
+    Game_Map *game_map,
     char path[], SDL_Renderer *renderer 
 )
 {
+    Player * player;
+    player = ( Player * ) malloc( sizeof ( Player ) );
+
     player->texture = load_image( path, renderer );
 
     int y, x;
@@ -28,4 +31,5 @@ void draw_player( Player *player, SDL_Renderer *renderer )
 void destroy_player( Player *player )
 {
     SDL_DestroyTexture( player->texture );
+    free( player );
 }

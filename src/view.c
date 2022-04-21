@@ -1,4 +1,4 @@
-#include "view.h"
+#include "headers/view.h"
 
 /*-------------Constants-------------*/
 const int 
@@ -81,22 +81,23 @@ int game_sdl_run( )
 
     SDL_RenderSetScale(renderer, SCALE, SCALE);
 
-    Game_Map game_map;
-    init_game_map
+    Game_Map * game_map = init_game_map
     ( 
-        &game_map, MAX_X, MAX_Y, 
-        "./res/img/floor.bmp", "./res/img/wall.bmp", 
+        MAX_X, MAX_Y, 
+        "../res/img/floor.bmp", "../res/img/wall.bmp",
         renderer 
     );
-    Player player;
-    init_player( &player, &game_map, "./res/img/hero.bmp", renderer );
+    Player * player = init_player
+    ( 
+        game_map, "../res/img/hero.bmp", renderer 
+    );
     /*---------Init-Part--------*/
 
     /*---------Draw-Part--------*/
     SDL_RenderClear( renderer );
 
-    draw_game_map( &game_map, renderer );
-    draw_player( &player, renderer );
+    draw_game_map( game_map, renderer );
+    draw_player( player, renderer );
     
     SDL_RenderPresent( renderer );
 
@@ -117,8 +118,8 @@ int game_sdl_run( )
     }
     
     /*----------Destroy-Part----------*/
-    destroy_player( &player );
-    destroy_game_map( &game_map );
+    destroy_player( player );
+    destroy_game_map( game_map );
 
     SDL_DestroyWindow( window );
     SDL_DestroyRenderer( renderer );
