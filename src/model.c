@@ -1,12 +1,17 @@
 #include "headers/model.h"
 
-/*--------Func-Prototypes--------*/
+/*-------------------Func-Prototypes-------------------*/
+
+/*------Player------*/
 Player * init_player
 (
     Game_Map *game_map,
     char texture_path[], SDL_Renderer *renderer 
 );
 void destroy_player( Player *player );
+/*------Player------*/
+
+/*--------MAP-------*/
 void destroy_game_map( Game_Map *game_map );
 Coordinates_Point_Of_Bridge generate_one_room
 (
@@ -32,8 +37,10 @@ Game_Map * init_game_map
     char path_to_floor_img[], char path_to_wall_img[],
     SDL_Renderer *renderer 
 );
+/*--------MAP-------*/
+
 SDL_Texture* load_image( char path[], SDL_Renderer *renderer );
-/*--------Func-Prototypes--------*/
+/*-------------------Func-Prototypes-------------------*/
 
 /*-------------------MODEL-MAIN-------------------*/
 MODEL * MODEL_init( SDL_Renderer * renderer )
