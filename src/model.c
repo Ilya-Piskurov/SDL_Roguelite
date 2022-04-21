@@ -1,23 +1,139 @@
-#include "headers/map.h"
+#include "headers/model.h"
 
-void draw_game_map( Game_Map *game_map, SDL_Renderer *renderer )
+/*-------------------Func-Prototypes-------------------*/
+
+/*------Player------*/
+Player * init_player
+(
+    Game_Map *game_map,
+    char texture_path[], SDL_Renderer *renderer 
+);
+void destroy_player( Player *player );
+/*------Player------*/
+
+/*--------MAP-------*/
+void destroy_game_map( Game_Map *game_map );
+Coordinates_Point_Of_Bridge generate_one_room
+(
+    char map[][ MAX_X ], int num_of_room
+);
+void debug_print_coordinates
+(
+    int top_y, int bottom_y, int left_x, 
+    int right_x, int num_of_room
+);
+void set_map_of_null( char map[][ MAX_X ], int max_x, int max_y );
+void build_bridge
+(
+    char map[][MAX_X], int max_x, int max_y,
+    int x1, int x2, int y1, int y2
+);
+bool is_first_room( int x, int y );
+void generate_grid( Game_Map *game_map );
+void debug_console_print_map( Game_Map *game_map );
+Game_Map * init_game_map
+( 
+    int max_x, int max_y,
+    char path_to_floor_img[], char path_to_wall_img[],
+    SDL_Renderer *renderer 
+);
+/*--------MAP-------*/
+
+SDL_Texture* load_image( char path[], SDL_Renderer *renderer );
+/*-------------------Func-Prototypes-------------------*/
+
+/*-------------------MODEL-MAIN-------------------*/
+MODEL * MODEL_init( SDL_Renderer * renderer )
 {
-    for ( int y = 0; y < game_map->max_y; y++ )
-    {
-        for ( int x = 0; x < game_map->max_x; x++)
-        {
-            if ( game_map->grid[ y ][ x ] == '#')
-            {
-                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map->wall_texture, renderer );
-            }
-            if ( game_map->grid[ y ][ x ] == ' ')
-            {
-                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map->floor_texture, renderer );
-            }
-        }
-    }
+    MODEL * MODEL_object;
+    MODEL_object = ( MODEL * ) malloc( sizeof ( MODEL ) );
+
+    MODEL_object->m_Game_Map = init_game_map
+    (
+        MAX_X, MAX_Y,
+        FLOOR_TEXTURE_PATH, WALL_TEXTURE_PATH,
+        renderer
+    );
+
+    MODEL_object->m_Player = init_player
+    (
+        MODEL_object->m_Game_Map, 
+        PLAYER_TEXTURE_PATH, renderer
+    );
+
+    return MODEL_object;
 }
 
+void MODEL_destroy( MODEL * MODEL_object )
+{
+    destroy_player( MODEL_object->m_Player );
+    destroy_game_map( MODEL_object->m_Game_Map );
+}
+
+SDL_Texture* load_image( char path[], SDL_Renderer *renderer )
+{
+    SDL_Surface *loaded_image = NULL;
+    SDL_Texture *texture      = NULL;
+
+    loaded_image = SDL_LoadBMP( path );
+
+    if ( loaded_image != NULL )
+    {
+        SDL_SetColorKey
+        (
+            loaded_image, true, SDL_MapRGB( loaded_image->format, BACKGROUND_COLOR ) 
+        );
+        texture = SDL_CreateTextureFromSurface
+        (
+            renderer, loaded_image
+        );
+        if ( NULL == texture )
+        {
+            printf( "SDL_CreateTextureFromSurface error: %s\n", SDL_GetError( ) );
+        }
+        SDL_FreeSurface( loaded_image );
+    }
+    else
+    {
+        printf( "SDL_LoadBMP error: %s\n", SDL_GetError( ) );
+    }
+
+    return texture;
+}
+/*-------------------MODEL-MAIN-------------------*/
+
+/*-------------------PLAYER-------------------*/
+Player * init_player
+(
+    Game_Map *game_map,
+    char texture_path[], SDL_Renderer *renderer 
+)
+{
+    Player * player;
+    player = ( Player * ) malloc( sizeof ( Player ) );
+
+    player->texture = load_image( texture_path, renderer );
+
+    int y, x;
+    do
+    {
+        y = 1 + ( rand() % ( MAX_Y - MAX_ROOM_HEIGHT - 1 ) );
+        x = 1 + ( rand() % ( MAX_X - MAX_ROOM_WIDTH - 1 ) );
+    } 
+    while ( game_map->grid[ y ][ x ] != ' ');
+
+    player->y = y * TILE_SIZE;
+    player->x = x * TILE_SIZE;
+}
+
+void destroy_player( Player *player )
+{
+    SDL_DestroyTexture( player->texture );
+    free( player );
+}
+/*-------------------PLAYER-------------------*/
+
+/*-------------------MAP-------------------*/
 void destroy_game_map( Game_Map *game_map )
 {
     SDL_DestroyTexture( game_map->floor_texture );
@@ -222,3 +338,4 @@ Game_Map * init_game_map
 
     return game_map;
 }
+/*-------------------MAP-------------------*/

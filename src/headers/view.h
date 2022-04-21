@@ -5,24 +5,23 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
-#include "player.h"
-#include "map.h"
+#include "model.h"
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
-#define TILE_SIZE 16
-#define BACKGROUND_COLOR 255, 255, 255
 #define SCALE 1
 /*-------------Constants-------------*/
 
+typedef struct
+{
+    SDL_Window   * m_Window;
+    SDL_Renderer * m_Renderer;
+} VIEW;
+
 /*--------Func-Prototypes--------*/
-int game_sdl_run( );
-SDL_Texture* load_image( char path[], SDL_Renderer *renderer );
-void apply_surface
-( 
-    int x, int y, SDL_Texture *texture,
-    SDL_Renderer *renderer
-);
+VIEW * VIEW_init( );
+void VIEW_destroy( VIEW * VIEW_object );
+void VIEW_draw_frame( VIEW * VIEW_object, MODEL * MODEL_object );
 /*--------Func-Prototypes--------*/
 
 #endif
