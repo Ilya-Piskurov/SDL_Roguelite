@@ -19,9 +19,9 @@ typedef struct Player
 /*---------Typedef---------*/
 
 /*--------Func-Prototypes--------*/
-void init_player
+Player * init_player
 ( 
-    Player *player, Game_Map *game_map,
+    Game_Map *game_map,
     char path[], SDL_Renderer *renderer
 );
 void destroy_player( Player *player );

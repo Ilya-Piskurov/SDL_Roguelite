@@ -45,9 +45,9 @@ typedef struct
 /*--------Func-Prototypes--------*/
 void generate_grid( Game_Map *game_map );
 void debug_console_print_map( Game_Map *game_map );
-void init_game_map
+Game_Map * init_game_map
 ( 
-    Game_Map *game_map, int max_x, int max_y,
+    int max_x, int max_y,
     char path_to_floor_img[], char path_to_wall_img[],
     SDL_Renderer *renderer 
 );

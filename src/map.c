@@ -1,4 +1,4 @@
-#include "map.h"
+#include "headers/map.h"
 
 void draw_game_map( Game_Map *game_map, SDL_Renderer *renderer )
 {
@@ -22,6 +22,7 @@ void destroy_game_map( Game_Map *game_map )
 {
     SDL_DestroyTexture( game_map->floor_texture );
     SDL_DestroyTexture( game_map->wall_texture  );
+    free( game_map );
 }
 
 void debug_print_coordinates
@@ -201,13 +202,16 @@ void debug_console_print_map( Game_Map *game_map )
     putchar( '\n' );
 }
 
-void init_game_map
+Game_Map * init_game_map
 ( 
-    Game_Map *game_map, int max_x, int max_y,
+    int max_x, int max_y,
     char path_to_floor_img[], char path_to_wall_img[],
     SDL_Renderer *renderer 
 ) 
 {
+    Game_Map * game_map;
+    game_map = ( Game_Map * ) malloc( sizeof ( Game_Map ) );
+
     game_map->max_x = max_x;
     game_map->max_y = max_y;
 
@@ -215,4 +219,6 @@ void init_game_map
 
     game_map->floor_texture = load_image( path_to_floor_img, renderer );
     game_map->wall_texture  = load_image( path_to_wall_img, renderer );
+
+    return game_map;
 }
