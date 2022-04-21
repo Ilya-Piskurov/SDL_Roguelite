@@ -1,11 +1,11 @@
-#ifndef MAP_H
-#define MAP_H
+#ifndef MODEL_H
+#define MODEL_H
 
 /*-------------Libraries-------------*/
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdio.h>
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
@@ -19,9 +19,23 @@
 #define MIN_ROOM_WIDTH 3
 
 #define BRIDGE_WIDTH 2
+
+#define FLOOR_TEXTURE_PATH  "../res/img/floor.bmp"
+#define WALL_TEXTURE_PATH   "../res/img/wall.bmp"
+#define PLAYER_TEXTURE_PATH "../res/img/hero.bmp"
+
+#define BACKGROUND_COLOR 255, 255, 255
+#define TILE_SIZE 16
 /*-------------Constants-------------*/
 
 /*---------Typedef---------*/
+typedef struct
+{
+    double x;
+    double y;
+    SDL_Texture *texture;
+} Player;
+
 typedef struct
 {
     int max_x;
@@ -33,26 +47,20 @@ typedef struct
 
 typedef struct
 {
+    Player   * m_Player;
+    Game_Map * m_Game_Map;
+} MODEL;
+
+typedef struct
+{
     int x;
     int y;
 } Coordinates_Point_Of_Bridge;
 /*---------Typedef---------*/
 
-/*-------------Libraries-------------*/
-#include "view.h"
-/*-------------Libraries-------------*/
-
 /*--------Func-Prototypes--------*/
-void generate_grid( Game_Map *game_map );
-void debug_console_print_map( Game_Map *game_map );
-Game_Map * init_game_map
-( 
-    int max_x, int max_y,
-    char path_to_floor_img[], char path_to_wall_img[],
-    SDL_Renderer *renderer 
-);
-void destroy_game_map( Game_Map *game_map );
-void draw_game_map( Game_Map *game_map, SDL_Renderer *renderer );
+MODEL * MODEL_init( SDL_Renderer * renderer );
+void MODEL_destroy( MODEL * MODEL_object );
 /*--------Func-Prototypes--------*/
 
 #endif

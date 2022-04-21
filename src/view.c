@@ -6,35 +6,37 @@ const int
     HEIGHT = MAX_Y * TILE_SIZE * SCALE;
 /*-------------Constants-------------*/
 
-SDL_Texture* load_image( char path[], SDL_Renderer *renderer )
+/*--------Func-Prototypes--------*/
+void draw_player( Player *player, SDL_Renderer *renderer );
+void draw_game_map( Game_Map *game_map, SDL_Renderer *renderer );
+void apply_surface
+( 
+    int x, int y, SDL_Texture *texture,
+    SDL_Renderer *renderer
+);
+/*--------Func-Prototypes--------*/
+
+void draw_player( Player *player, SDL_Renderer *renderer )
 {
-    SDL_Surface *loaded_image = NULL;
-    SDL_Texture *texture      = NULL;
+    apply_surface( player->x, player->y, player->texture, renderer );
+}
 
-    loaded_image = SDL_LoadBMP( path );
-
-    if ( loaded_image != NULL )
+void draw_game_map( Game_Map *game_map, SDL_Renderer *renderer )
+{
+    for ( int y = 0; y < game_map->max_y; y++ )
     {
-        SDL_SetColorKey
-        (
-            loaded_image, true, SDL_MapRGB( loaded_image->format, BACKGROUND_COLOR ) 
-        );
-        texture = SDL_CreateTextureFromSurface
-        (
-            renderer, loaded_image
-        );
-        if ( NULL == texture )
+        for ( int x = 0; x < game_map->max_x; x++)
         {
-            printf( "SDL_CreateTextureFromSurface error: %s\n", SDL_GetError( ) );
+            if ( game_map->grid[ y ][ x ] == '#')
+            {
+                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map->wall_texture, renderer );
+            }
+            if ( game_map->grid[ y ][ x ] == ' ')
+            {
+                apply_surface( x * TILE_SIZE, y * TILE_SIZE, game_map->floor_texture, renderer );
+            }
         }
-        SDL_FreeSurface( loaded_image );
     }
-    else
-    {
-        printf( "SDL_LoadBMP error: %s\n", SDL_GetError( ) );
-    }
-
-    return texture;
 }
 
 void apply_surface
@@ -50,9 +52,12 @@ void apply_surface
     SDL_RenderCopy( renderer, texture, NULL, &position );
 }
 
-int game_sdl_run( )
+/*-------------------VIEW-MAIN-------------------*/
+VIEW * VIEW_init( )
 {
-    /*---------Init-Part--------*/
+    VIEW * VIEW_object;
+    VIEW_object = ( VIEW * ) malloc( sizeof (VIEW) );
+
     SDL_Init( SDL_INIT_EVERYTHING );
 
     SDL_Window *window = SDL_CreateWindow
@@ -64,7 +69,6 @@ int game_sdl_run( )
     if ( NULL == window )
     {
         printf( "SDL_CreateWindow error: %s\n", SDL_GetError( ) );
-        return 1;
     }
 
     SDL_Renderer *renderer = SDL_CreateRenderer
@@ -73,58 +77,33 @@ int game_sdl_run( )
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
 
-    if ( NULL == renderer)
+    if ( NULL == renderer )
     {
         printf( "SDL_CreateRenderer error: %s\n", SDL_GetError( ) );
-        return 1;
     }
 
     SDL_RenderSetScale(renderer, SCALE, SCALE);
 
-    Game_Map * game_map = init_game_map
-    ( 
-        MAX_X, MAX_Y, 
-        "../res/img/floor.bmp", "../res/img/wall.bmp",
-        renderer 
-    );
-    Player * player = init_player
-    ( 
-        game_map, "../res/img/hero.bmp", renderer 
-    );
-    /*---------Init-Part--------*/
+    VIEW_object->m_Window   = window;
+    VIEW_object->m_Renderer = renderer;
 
-    /*---------Draw-Part--------*/
-    SDL_RenderClear( renderer );
-
-    draw_game_map( game_map, renderer );
-    draw_player( player, renderer );
-    
-    SDL_RenderPresent( renderer );
-
-    //SDL_Delay(2000);
-    /*---------Draw-Part--------*/
-
-    SDL_Event windowEvent;
-    
-    while ( true )
-    {
-        if ( SDL_PollEvent( &windowEvent ) )
-        {
-            if ( SDL_QUIT == windowEvent.type )
-            {
-                break;
-            }
-        }
-    }
-    
-    /*----------Destroy-Part----------*/
-    destroy_player( player );
-    destroy_game_map( game_map );
-
-    SDL_DestroyWindow( window );
-    SDL_DestroyRenderer( renderer );
-    SDL_Quit( );
-    /*----------Destroy-Part----------*/
-    
-    return EXIT_SUCCESS;
+    return VIEW_object;
 }
+
+void VIEW_destroy( VIEW * VIEW_object )
+{
+    SDL_DestroyWindow( VIEW_object->m_Window );
+    SDL_DestroyRenderer( VIEW_object->m_Renderer );
+    SDL_Quit( );
+}
+
+void VIEW_draw_frame( VIEW * VIEW_object, MODEL * MODEL_object )
+{
+    SDL_RenderClear( VIEW_object->m_Renderer );
+
+    draw_game_map( MODEL_object->m_Game_Map, VIEW_object->m_Renderer );
+    draw_player( MODEL_object->m_Player, VIEW_object->m_Renderer );
+    
+    SDL_RenderPresent( VIEW_object->m_Renderer );
+}
+/*-------------------VIEW-MAIN-------------------*/

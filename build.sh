@@ -1,3 +1,4 @@
 #!/bin/bash
-
-gcc -Wall -o roguelite main.c view.c map.c player.c -lSDL2
+cd ./src
+gcc -Wall -o "./bin/roguelite" main.c view.c model.c controller.c -lSDL2
+cd ..
