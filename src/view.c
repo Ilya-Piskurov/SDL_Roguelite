@@ -26,9 +26,9 @@ VIEW * VIEW_init( )
 
     SDL_Window *window = SDL_CreateWindow
     (
-		"SDL_Roguelite", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-		WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI
-	);
+        "SDL_Roguelite", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
+        WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI
+    );
 
     if ( NULL == window )
     {
