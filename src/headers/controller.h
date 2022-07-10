@@ -4,6 +4,7 @@
 /*-------------Libraries-------------*/
 #include <SDL2/SDL.h>
 #include "view.h"
+#include <time.h>
 /*-------------Libraries-------------*/
 
 /*--------Func-Prototypes--------*/
