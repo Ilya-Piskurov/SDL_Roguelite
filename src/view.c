@@ -26,9 +26,9 @@ VIEW * VIEW_init( )
 
     SDL_Window *window = SDL_CreateWindow
     (
-		"SDL_Roguelite", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-		WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI
-	);
+        "SDL_Roguelite", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
+        WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI
+    );
 
     if ( NULL == window )
     {
@@ -73,6 +73,30 @@ void VIEW_draw_frame( VIEW * VIEW_object, MODEL * MODEL_object )
 /*-------------------VIEW-MAIN-------------------*/
 
 /*-------------------HELP-FUNC-------------------*/
+void MODEL_Player_set_frame_for_animation
+( 
+    VIEW * VIEW_object, MODEL * MODEL_object, double currentFrame
+)
+{
+    int frame = (int) currentFrame;
+    switch (frame)
+    {
+        case 0:
+            MODEL_object->m_Player->texture = load_image(PLAYER_TEXTURE_FRAME_1, VIEW_object->m_Renderer);
+            break;
+        case 1:
+            MODEL_object->m_Player->texture = load_image(PLAYER_TEXTURE_FRAME_2, VIEW_object->m_Renderer);
+            break;  
+        case 2:
+            MODEL_object->m_Player->texture = load_image(PLAYER_TEXTURE_FRAME_3, VIEW_object->m_Renderer);
+            break;
+        case 3:
+            MODEL_object->m_Player->texture = load_image(PLAYER_TEXTURE_FRAME_4, VIEW_object->m_Renderer);
+            break;
+    }
+}
+
+
 void draw_player( Player *player, SDL_Renderer *renderer )
 {
     apply_surface( player->x, player->y, player->texture, renderer );

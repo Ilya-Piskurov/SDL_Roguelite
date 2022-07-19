@@ -9,7 +9,8 @@
 /*-------------Libraries-------------*/
 
 /*-------------Constants-------------*/
-#define SCALE 1
+#define SCALE 3
+#define ANIMATION_SPEED 0.006
 /*-------------Constants-------------*/
 
 typedef struct
@@ -22,6 +23,10 @@ typedef struct
 VIEW * VIEW_init( );
 void VIEW_destroy( VIEW * VIEW_object );
 void VIEW_draw_frame( VIEW * VIEW_object, MODEL * MODEL_object );
+void MODEL_Player_set_frame_for_animation
+( 
+    VIEW * VIEW_object, MODEL * MODEL_object, double currentFrame 
+);
 /*--------Func-Prototypes--------*/
 
 #endif
